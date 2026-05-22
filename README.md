@@ -49,11 +49,11 @@ Each homework task is developed in a dedicated branch.
 ```text
 
 main
-├── hw-01
-├── hw-02
-├── hw-03
-├── hw-04
-└── hw-05
+├── 01-express
+├── 02-mongodb
+├── 03-validation
+├── 04-auth
+└── 05-mail-and-img
 
 ```
 
