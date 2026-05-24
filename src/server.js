@@ -7,6 +7,9 @@ const app = express();
 
 const PORT = process.env.PORT ?? 3000;
 
+// Middleware for JSON parsing
+app.use(express.json());
+
 // Allows requests from any sources
 app.use(cors());
 
