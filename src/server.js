@@ -1,9 +1,14 @@
 import express from 'express';
+import cors from 'cors';
+
 import 'dotenv/config';
 
 const app = express();
 
 const PORT = process.env.PORT ?? 3000;
+
+// Allows requests from any sources
+app.use(cors());
 
 app.get('/notes', (response, request) => {
   response.status(200).json({
