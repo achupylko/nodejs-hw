@@ -45,6 +45,11 @@ app.get('/notes/:noteId', (response, request) => {
   });
 });
 
+// Middleware for non-existent routes
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
