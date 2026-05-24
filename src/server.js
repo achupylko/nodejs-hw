@@ -32,13 +32,13 @@ app.use(
   }),
 );
 
-app.get('/notes', (response, request) => {
+app.get('/notes', (request, response) => {
   response.status(200).json({
     message: 'Retrieved all notes',
   });
 });
 
-app.get('/notes/:noteId', (response, request) => {
+app.get('/notes/:noteId', (request, response) => {
   const { noteId } = request.params;
   response.status(200).json({
     message: `Retrieved note with ID: ${noteId}`,
