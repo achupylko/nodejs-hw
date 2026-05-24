@@ -45,9 +45,20 @@ app.get('/notes/:noteId', (response, request) => {
   });
 });
 
+app.get('/test-error', () => {
+  throw new Error('Simulated server error');
+});
+
 // Middleware for non-existent routes
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
+});
+
+// Middleware for error handling
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    message: err.message,
+  });
 });
 
 app.listen(PORT, () => {
