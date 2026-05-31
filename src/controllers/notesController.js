@@ -16,3 +16,8 @@ export const getNoteById = async (request, response) => {
 
   response.status(200).json(note);
 };
+
+export const createNote = async (request, response) => {
+  const note = await Note.create(request.body);
+  response.status(201).json(note);
+};
