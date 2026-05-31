@@ -4,7 +4,7 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
-import notesRouters from './routes/noteRoutes.js';
+import notesRouters from './routes/notesRoutes.js';
 
 import 'dotenv/config';
 
