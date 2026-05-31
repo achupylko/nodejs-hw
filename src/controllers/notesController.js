@@ -21,3 +21,12 @@ export const createNote = async (request, response) => {
   const note = await Note.create(request.body);
   response.status(201).json(note);
 };
+
+export const deleteNote = async (request, response) => {
+  const { noteId } = request.params;
+  const note = await Note.findByIdAndDelete({ _id: noteId });
+
+  if (!note) {
+    throw createHttpError(404, 'Note not found');
+  }
+};
