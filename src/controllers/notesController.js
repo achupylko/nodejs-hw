@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import { Note } from '../models/note.js';
 
-export const getNotes = async (request, response) => {
+export const getAllNotes = async (request, response) => {
   const notes = await Note.find();
   response.status(200).json(notes);
 };
