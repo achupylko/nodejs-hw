@@ -4,7 +4,7 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
-import notesRouters from './routes/notesRoutes.js';
+import notesRouter from './routes/notesRoutes.js';
 
 import 'dotenv/config';
 
@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors());
 
 // Connect the note route group
-app.use(notesRouters);
+app.use(notesRouter);
 
 // Middleware for non-existent routes
 app.use(notFoundHandler);
