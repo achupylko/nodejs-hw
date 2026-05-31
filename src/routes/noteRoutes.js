@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { getnoteById, getNotes } from '../controllers/notesController';
+import { getNoteById, getNotes } from '../controllers/notesController';
 
 const router = Router();
 
 router.get('/notes', getNotes);
 
-router.get('/notes/:noteId', getnoteById);
+router.get('/notes/:noteId', getNoteById);
 
 export default router;

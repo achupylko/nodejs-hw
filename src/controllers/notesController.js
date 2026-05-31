@@ -6,7 +6,7 @@ export const getNotes = async (request, response) => {
   response.status(200).json(notes);
 };
 
-export const getnoteById = async (request, response) => {
+export const getNoteById = async (request, response) => {
   const { noteId } = request.params;
   const note = await Note.findById(noteId);
 
