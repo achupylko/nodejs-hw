@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import { Note } from '../models/note';
+import { request } from 'express';
 
 export const getNotes = async (request, response) => {
   const notes = await Note.find();
@@ -29,4 +30,19 @@ export const deleteNote = async (request, response) => {
   if (!note) {
     throw createHttpError(404, 'Note not found');
   }
+
+  response.status(200).json(note);
+};
+
+export const updateNote = async (request, response) => {
+  const { noteId } = request.params;
+  const note = await Note.findByIdAndUpdate({ _id: noteId }, request.body, {
+    returnDocument: 'after',
+  });
+
+  if (!note) {
+    throw createHttpError(404, 'Note not found');
+  }
+
+  response.status(200).json(note);
 };
