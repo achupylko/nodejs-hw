@@ -7,6 +7,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import notesRouter from './routes/notesRoutes.js';
 
 import 'dotenv/config';
+import { errors } from 'celebrate';
 
 const app = express();
 
@@ -26,6 +27,9 @@ app.use(notesRouter);
 
 // Middleware for non-existent routes
 app.use(notFoundHandler);
+
+// Error handling from celebrate (validation)
+app.use(errors());
 
 // Middleware for error handling
 app.use(errorHandler);
