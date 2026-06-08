@@ -6,13 +6,20 @@ import {
   getAllNotes,
   updateNote,
 } from '../controllers/notesController.js';
+import { celebrate } from 'celebrate';
+import {
+  createNoteSchema,
+  getAllNotesSchema,
+  noteIdSchema,
+  updateNoteSchema,
+} from '../validations/notesValidation.js';
 
 const router = Router();
 
-router.get('/notes', getAllNotes);
-router.post('/notes', createNote);
-router.get('/notes/:noteId', getNoteById);
-router.delete('/notes/:noteId', deleteNote);
-router.patch('/notes/:noteId', updateNote);
+router.get('/notes', celebrate(getAllNotesSchema), getAllNotes);
+router.post('/notes', celebrate(createNoteSchema), createNote);
+router.get('/notes/:noteId', celebrate(noteIdSchema), getNoteById);
+router.delete('/notes/:noteId', celebrate(noteIdSchema), deleteNote);
+router.patch('/notes/:noteId', celebrate(updateNoteSchema), updateNote);
 
 export default router;
