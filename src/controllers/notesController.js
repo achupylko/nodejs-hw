@@ -2,8 +2,27 @@ import createHttpError from 'http-errors';
 import { Note } from '../models/note.js';
 
 export const getAllNotes = async (request, response) => {
-  const notes = await Note.find();
-  response.status(200).json(notes);
+  const { tag, search } = request.query;
+
+  const notesQuery = Note.find();
+
+  if (tag) {
+    notesQuery.where('tag').equals(tag);
+  }
+  if (search) {
+    notesQuery.where({
+      $or: [
+        { title: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
+      ],
+    });
+  }
+
+  const notes = await notesQuery.exec();
+
+  response.status(200).json({
+    notes,
+  });
 };
 
 export const getNoteById = async (request, response) => {
