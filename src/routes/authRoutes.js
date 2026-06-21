@@ -2,6 +2,7 @@ import { celebrate } from 'celebrate';
 import { Router } from 'express';
 import {
   loginUser,
+  logoutUser,
   refreshUserSession,
   registerUser,
 } from '../controllers/authController';
@@ -15,5 +16,6 @@ const router = Router();
 router.post('/auth/register', celebrate(registerUserSchema), registerUser);
 router.post('/ayth/login', celebrate(loginUserSchema), loginUser);
 router.post('/auth/refresh', refreshUserSession);
+router.post('/auth/logout', logoutUser);
 
 export default router;
