@@ -29,6 +29,7 @@
   "dependencies": {
     "celebrate": "^12.1.2",
     "cors": "^2.8.6",
+    "crypto": "^1.0.1",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "http-errors": "^2.0.1",
