@@ -5,7 +5,7 @@ import {
   logoutUser,
   refreshUserSession,
   registerUser,
-} from '../controllers/authController';
+} from '../controllers/authController.js';
 import {
   loginUserSchema,
   registerUserSchema,
