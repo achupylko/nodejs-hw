@@ -4,7 +4,7 @@ const userSchema = new Schema(
   {
     username: { type: String, trim: true },
     email: { type: String, unique: true, required: true, trim: true },
-    password: { type: String, length: 8, required: true },
+    password: { type: String, minlength: 8, required: true },
   },
   { timestamps: true },
 );
