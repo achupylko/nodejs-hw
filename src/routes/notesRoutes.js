@@ -1,12 +1,13 @@
+import { celebrate } from 'celebrate';
 import { Router } from 'express';
 import {
   createNote,
   deleteNote,
-  getNoteById,
   getAllNotes,
+  getNoteById,
   updateNote,
 } from '../controllers/notesController.js';
-import { celebrate } from 'celebrate';
+import { authenticate } from '../middleware/authenticate.js';
 import {
   createNoteSchema,
   getAllNotesSchema,
@@ -15,6 +16,8 @@ import {
 } from '../validations/notesValidation.js';
 
 const router = Router();
+
+router.use('/notes', authenticate);
 
 router.get('/notes', celebrate(getAllNotesSchema), getAllNotes);
 router.post('/notes', celebrate(createNoteSchema), createNote);
