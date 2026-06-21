@@ -1,13 +1,13 @@
+import { errors } from 'celebrate';
 import cors from 'cors';
+import 'dotenv/config';
 import express from 'express';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
+import authRoutes from './routes/authRoutes.js';
 import notesRouter from './routes/notesRoutes.js';
-
-import 'dotenv/config';
-import { errors } from 'celebrate';
 
 const app = express();
 
@@ -21,6 +21,9 @@ app.use(express.json());
 
 // Allows requests from any sources
 app.use(cors());
+
+// Auth routes
+app.use(authRoutes);
 
 // Connect the note route group
 app.use(notesRouter);
