@@ -59,7 +59,7 @@ export const createNote = async (request, response) => {
 
 export const deleteNote = async (request, response) => {
   const { noteId } = request.params;
-  const note = await Note.findByIdAndDelete({
+  const note = await Note.findOneAndDelete({
     _id: noteId,
     userId: request.user._id,
   });
