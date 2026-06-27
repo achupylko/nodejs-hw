@@ -1,8 +1,13 @@
 import bcrypt from 'bcrypt';
+import handlebars from 'handlebars';
 import createHttpError from 'http-errors';
+import jwt from 'jsonwebtoken';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { Session } from '../models/session.js';
 import { User } from '../models/user.js';
 import { createSession, setSessionCookies } from '../services/auth.js';
-import { Session } from '../models/session.js';
+import { sendEmail } from '../utils/sendMail.js';
 
 export const registerUser = async (req, res) => {
   const { email, password } = req.body;
@@ -113,4 +118,61 @@ export const logoutUser = async (req, res) => {
   res.clearCookie('refreshToken');
 
   res.status(204).send();
+};
+
+export const requestResetEmail = async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  // If the user does not exist, we intentionally return the same "successful"
+  // response without sending the email (anti user enumeration).
+  if (!user) {
+    return res.status(200).json({
+      message: 'If this email exists, a reset link has been sent',
+    });
+  }
+
+  // The user exists — generate a short-lived JWT and send the email
+  const resetToken = jwt.sign(
+    { sub: user._id, email },
+    process.env.JWT_SECRET,
+    { expiresIn: '15m' },
+  );
+
+  // Form the path to the template
+  const templatePath = path.resolve('src/templates/reset-password-email.html');
+
+  // Reading the template
+  const templateSource = await fs.readFile(templatePath, 'utf-8');
+
+  // Preparing the template for filling
+  const template = handlebars.compile(templateSource);
+
+  // Generate an HTML document with dynamic data from the template
+  const html = template({
+    name: user.username,
+    link: `${process.env.FRONTEND_DOMAIN}/reset-password?token=${resetToken}`,
+  });
+
+  try {
+    await sendEmail({
+      from: process.env.SMTP_FROM,
+      to: email,
+      subject: 'Reset your password',
+
+      // Pass HTML to the mail signature function
+      html,
+    });
+  } catch {
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
+  }
+
+  // The same "neutral" answer
+  res.status(200).json({
+    message: 'If this email exists, a reset link has been sent',
+  });
 };
