@@ -9,6 +9,7 @@ import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import authRoutes from './routes/authRoutes.js';
 import notesRouter from './routes/notesRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
@@ -25,11 +26,14 @@ app.use(cors());
 
 app.use(cookieParser());
 
+// Connect the note route group
+app.use(notesRouter);
+
 // Auth routes
 app.use(authRoutes);
 
-// Connect the note route group
-app.use(notesRouter);
+// User routes
+app.use(userRoutes);
 
 // Middleware for non-existent routes
 app.use(notFoundHandler);
