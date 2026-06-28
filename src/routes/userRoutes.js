@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { updateUserAvatar } from '../controllers/userController';
+import { updateUserAvatar } from '../controllers/userController.js';
 import { authenticate } from '../middleware/authenticate.js';
 import { upload } from '../middleware/multer.js';
 
